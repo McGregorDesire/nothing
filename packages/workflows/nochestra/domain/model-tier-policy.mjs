@@ -1,24 +1,35 @@
+const OLLAMA_ORNITH = { provider: "ollama", name: "ornith:9b", contextWindow: 262144 };
+
+const GEMINI_38_FLASH = { provider: "antigravity", name: "gemini-3.8-flash", contextWindow: 1048576 };
+const GEMINI_35_FLASH = { provider: "antigravity", name: "gemini-3.5-flash", contextWindow: 1048576 };
+const GEMINI_31_PRO = { provider: "antigravity", name: "gemini-3.1-pro", contextWindow: 1048576 };
+const CLAUDE_SONNET = { provider: "antigravity", name: "claude-sonnet-5-5", contextWindow: 250000 };
+const CLAUDE_OPUS = { provider: "antigravity", name: "claude-opus-5-5", contextWindow: 250000 };
+const GPT_OSS = { provider: "antigravity", name: "gpt-oss-120b", contextWindow: 131072 };
+
+const GPT_54 = { provider: "openai-codex", name: "gpt-5.4", contextWindow: 272000 };
+const GPT_54_MINI = { provider: "openai-codex", name: "gpt-5.4-mini", contextWindow: 272000 };
+
 export const AVAILABLE_MODEL_TIERS = Object.freeze({
 	ollama: [
-		{ provider: "ollama", name: "ornith:9b", contextWindow: 262144 },
+		OLLAMA_ORNITH,
 	],
 	antigravity: [
-		{ provider: "antigravity", name: "gemini-3.7-flash", contextWindow: 1048576 },
-		{ provider: "antigravity", name: "gemini-3.6-flash", contextWindow: 1048576 },
-		{ provider: "antigravity", name: "gemini-3.5-flash", contextWindow: 1048576 },
-		{ provider: "antigravity", name: "gemini-3.1-pro", contextWindow: 1048576 },
-		{ provider: "antigravity", name: "claude-sonnet-5-5", contextWindow: 250000 },
-		{ provider: "antigravity", name: "claude-opus-5-5", contextWindow: 250000 },
-		{ provider: "antigravity", name: "gpt-oss-120b", contextWindow: 131072 },
+		GEMINI_38_FLASH,
+		GEMINI_35_FLASH,
+		GEMINI_31_PRO,
+		CLAUDE_SONNET,
+		CLAUDE_OPUS,
+		GPT_OSS,
 	],
 	"openai-codex": [
-		{ provider: "openai-codex", name: "gpt-5.4", contextWindow: 272000 },
-		{ provider: "openai-codex", name: "gpt-5.4-mini", contextWindow: 272000 },
+		GPT_54,
+		GPT_54_MINI,
 	],
 });
 
-export const DEFAULT_LOCAL_TIER = Object.freeze(AVAILABLE_MODEL_TIERS.ollama[0]);
-export const DEFAULT_CLOUD_TIER = Object.freeze(AVAILABLE_MODEL_TIERS.antigravity[1]);
+export const DEFAULT_LOCAL_TIER = Object.freeze(OLLAMA_ORNITH);
+export const DEFAULT_CLOUD_TIER = Object.freeze(GEMINI_38_FLASH);
 
 const MODEL_ALIASES = new Map();
 for (const models of Object.values(AVAILABLE_MODEL_TIERS)) {
@@ -33,26 +44,20 @@ for (const models of Object.values(AVAILABLE_MODEL_TIERS)) {
 
 // Typo and shortcut alias mappings
 const TYPO_ALIASES = [
-	["ornith", AVAILABLE_MODEL_TIERS.ollama[0]],
-	["ornith9", AVAILABLE_MODEL_TIERS.ollama[0]],
-	["ornith-9b", AVAILABLE_MODEL_TIERS.ollama[0]],
-	["3.6flash", AVAILABLE_MODEL_TIERS.antigravity[1]],
-	["3.6-flash", AVAILABLE_MODEL_TIERS.antigravity[1]],
-	["36flash", AVAILABLE_MODEL_TIERS.antigravity[1]],
-	["3.7flash", AVAILABLE_MODEL_TIERS.antigravity[0]],
-	["3.7-flash", AVAILABLE_MODEL_TIERS.antigravity[0]],
-	["37flash", AVAILABLE_MODEL_TIERS.antigravity[0]],
-	["sonnet", AVAILABLE_MODEL_TIERS.antigravity[4]],
-	["opus", AVAILABLE_MODEL_TIERS.antigravity[5]],
-	["claude-sonnet-4-6", AVAILABLE_MODEL_TIERS.antigravity[4]],
-	["claude-opus-4-6", AVAILABLE_MODEL_TIERS.antigravity[5]],
-	["sonnet46", AVAILABLE_MODEL_TIERS.antigravity[4]],
-	["opus46", AVAILABLE_MODEL_TIERS.antigravity[5]],
-	["sonnet55", AVAILABLE_MODEL_TIERS.antigravity[4]],
-	["opus55", AVAILABLE_MODEL_TIERS.antigravity[5]],
-	["gpt54", AVAILABLE_MODEL_TIERS["openai-codex"][1]],
-	["gpt54m", AVAILABLE_MODEL_TIERS["openai-codex"][2]],
-	["gpt54mini", AVAILABLE_MODEL_TIERS["openai-codex"][2]],
+	["ornith", OLLAMA_ORNITH],
+	["ornith9", OLLAMA_ORNITH],
+	["ornith-9b", OLLAMA_ORNITH],
+	["3.8flash", GEMINI_38_FLASH],
+	["3.8-flash", GEMINI_38_FLASH],
+	["38flash", GEMINI_38_FLASH],
+	["3.8.flash", GEMINI_38_FLASH],
+	["sonnet", CLAUDE_SONNET],
+	["opus", CLAUDE_OPUS],
+	["sonnet55", CLAUDE_SONNET],
+	["opus55", CLAUDE_OPUS],
+	["gpt54", GPT_54],
+	["gpt54m", GPT_54_MINI],
+	["gpt54mini", GPT_54_MINI],
 ];
 
 for (const [alias, model] of TYPO_ALIASES) {

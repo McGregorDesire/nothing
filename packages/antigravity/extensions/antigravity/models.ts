@@ -5,7 +5,7 @@ export const PROVIDER_NAME = "Antigravity";
 
 export type AntigravityRouting = {
 	off?: string;
-	routing?: Partial<Record<"off" | "minimal" | "low" | "medium" | "high" | "xhigh", string>>;
+	routing?: Partial<Record<"off" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max", string>>;
 	defaultRequestId?: string;
 };
 
@@ -33,29 +33,6 @@ export const ANTIGRAVITY_ROUTING: Record<string, AntigravityRouting> = {
 		},
 		defaultRequestId: "claude-sonnet-5-5-medium",
 	},
-	// Backward-compatibility aliases for 4.6
-	"claude-opus-4-6": {
-		off: "claude-opus-5-5-low",
-		routing: {
-			minimal: "claude-opus-5-5-low",
-			low: "claude-opus-5-5-low",
-			medium: "claude-opus-5-5-medium",
-			high: "claude-opus-5-5-high",
-			xhigh: "claude-opus-5-5-high",
-		},
-		defaultRequestId: "claude-opus-5-5-medium",
-	},
-	"claude-sonnet-4-6": {
-		off: "claude-sonnet-5-5-low",
-		routing: {
-			minimal: "claude-sonnet-5-5-low",
-			low: "claude-sonnet-5-5-low",
-			medium: "claude-sonnet-5-5-medium",
-			high: "claude-sonnet-5-5-high",
-			xhigh: "claude-sonnet-5-5-high",
-		},
-		defaultRequestId: "claude-sonnet-5-5-medium",
-	},
 	"gemini-3.1-pro": {
 		off: "gemini-3.1-pro-low",
 		routing: {
@@ -67,18 +44,7 @@ export const ANTIGRAVITY_ROUTING: Record<string, AntigravityRouting> = {
 	},
 	// These account-catalog routes manage thinking server-side; no low/medium/high IDs exist.
 	"gemini-3.8-flash": { defaultRequestId: "gemini-3.8-flash-tiered" },
-	"gemini-3.7-flash": { defaultRequestId: "gemini-3.7-flash-tiered" },
-	"gemini-3.6-flash": {
-		off: "gemini-3.6-flash-low",
-		routing: {
-			minimal: "gemini-3.6-flash-low",
-			low: "gemini-3.6-flash-low",
-			medium: "gemini-3.6-flash-medium",
-			high: "gemini-3.6-flash-high",
-			xhigh: "gemini-3.6-flash-high",
-		},
-		defaultRequestId: "gemini-3.6-flash-low",
-	},
+	"gemini-3.8.flash": { defaultRequestId: "gemini-3.8-flash-tiered" },
 	"gemini-3.5-flash": {
 		off: "gemini-3.5-flash-low",
 		routing: {
@@ -107,7 +73,7 @@ export const ANTIGRAVITY_MODELS: ProviderModelConfig[] = [
 		id: "claude-opus-5-5",
 		name: "Claude Opus 5.5 (Antigravity)",
 		reasoning: true,
-		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH" } as any,
+		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH", max: "HIGH" } as any,
 		input: ["text", "image"],
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		contextWindow: 250000,
@@ -117,7 +83,7 @@ export const ANTIGRAVITY_MODELS: ProviderModelConfig[] = [
 		id: "claude-sonnet-5-5",
 		name: "Claude Sonnet 5.5 (Antigravity)",
 		reasoning: true,
-		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH" } as any,
+		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH", max: "HIGH" } as any,
 		input: ["text", "image"],
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		contextWindow: 250000,
@@ -127,7 +93,7 @@ export const ANTIGRAVITY_MODELS: ProviderModelConfig[] = [
 		id: "gemini-3.1-pro",
 		name: "Gemini 3.1 Pro (Antigravity)",
 		reasoning: true,
-		thinkingLevelMap: { off: null, low: "LOW", high: "HIGH" } as any,
+		thinkingLevelMap: { off: null, low: "LOW", high: "HIGH", xhigh: "HIGH", max: "HIGH" } as any,
 		input: ["text", "image"],
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		contextWindow: 1048576,
@@ -137,27 +103,17 @@ export const ANTIGRAVITY_MODELS: ProviderModelConfig[] = [
 		id: "gemini-3.8-flash",
 		name: "Gemini 3.8 Flash (Antigravity)",
 		reasoning: true,
-		thinkingLevelMap: { off: null, minimal: null, low: null, medium: null, high: "AUTO", xhigh: null } as any,
+		thinkingLevelMap: { off: null, minimal: null, low: null, medium: null, high: "AUTO", xhigh: "AUTO", max: "AUTO" } as any,
 		input: ["text", "image"],
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		contextWindow: 1048576,
 		maxTokens: 65536,
 	},
 	{
-		id: "gemini-3.7-flash",
-		name: "Gemini 3.7 Flash (Antigravity)",
+		id: "gemini-3.8.flash",
+		name: "Gemini 3.8 Flash (Antigravity) [alias]",
 		reasoning: true,
-		thinkingLevelMap: { off: null, minimal: null, low: null, medium: null, high: "AUTO", xhigh: null } as any,
-		input: ["text", "image"],
-		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-		contextWindow: 1048576,
-		maxTokens: 65536,
-	},
-	{
-		id: "gemini-3.6-flash",
-		name: "Gemini 3.6 Flash (Antigravity)",
-		reasoning: true,
-		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH" } as any,
+		thinkingLevelMap: { off: null, minimal: null, low: null, medium: null, high: "AUTO", xhigh: "AUTO", max: "AUTO" } as any,
 		input: ["text", "image"],
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		contextWindow: 1048576,
@@ -167,7 +123,7 @@ export const ANTIGRAVITY_MODELS: ProviderModelConfig[] = [
 		id: "gemini-3.5-flash",
 		name: "Gemini 3.5 Flash (Antigravity)",
 		reasoning: true,
-		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH" } as any,
+		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH", max: "HIGH" } as any,
 		input: ["text", "image"],
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		contextWindow: 1048576,
@@ -191,9 +147,9 @@ export function getAntigravityRequestModelId(modelId: string, effort: string | u
 	if (effort === undefined || effort === "off") {
 		return r.off ?? r.routing?.minimal ?? r.routing?.low ?? r.defaultRequestId ?? modelId;
 	}
-	const effortKey = effort as "off" | "minimal" | "low" | "medium" | "high" | "xhigh";
-	if (effortKey === "xhigh") {
-		return r.routing?.xhigh ?? r.routing?.high ?? r.routing?.low ?? r.routing?.minimal ?? r.off ?? r.defaultRequestId ?? modelId;
+	const effortKey = effort as "off" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max";
+	if (effortKey === "max" || effortKey === "xhigh") {
+		return r.routing?.max ?? r.routing?.xhigh ?? r.routing?.high ?? r.routing?.low ?? r.routing?.minimal ?? r.off ?? r.defaultRequestId ?? modelId;
 	}
 	return r.routing?.[effortKey] ?? r.routing?.low ?? r.routing?.minimal ?? r.off ?? r.defaultRequestId ?? modelId;
 }

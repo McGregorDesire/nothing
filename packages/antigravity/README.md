@@ -35,8 +35,6 @@ npm install -g @raquezha/antigravity
 - Provider id: `antigravity`
 - Public model ids:
   - `gemini-3.8-flash`
-  - `gemini-3.7-flash`
-  - `gemini-3.6-flash`
   - `gemini-3.5-flash`
   - `gemini-3.1-pro`
   - `claude-sonnet-5-5`
@@ -44,15 +42,12 @@ npm install -g @raquezha/antigravity
   - `gpt-oss-120b`
 - Runtime routing examples:
   - `gemini-3.8-flash` -> `gemini-3.8-flash-tiered`
-  - `gemini-3.7-flash` -> `gemini-3.7-flash-tiered`
-  - Flash 3.7/3.8 thinking is server-managed (the single `high` selector maps to automatic thinking), not separate low/medium/high runtime IDs.
+  - Flash 3.8 thinking is server-managed (the single `high` selector maps to automatic thinking), not separate low/medium/high runtime IDs.
   - `gemini-3.5-flash` -> routes internally by reasoning level (`off`/`low`/`medium`/`high`) to Antigravity runtime IDs such as `gemini-3.5-flash-low`, `gemini-3.5-flash-medium`, or `gemini-3.5-flash-high`
   - `gemini-3.1-pro` -> routes internally to `gemini-3.1-pro-low` or `gemini-pro-agent`
   - `claude-sonnet-5-5` -> routes internally by reasoning level to `claude-sonnet-5-5-low`, `claude-sonnet-5-5-medium`, or `claude-sonnet-5-5-high`
   - `claude-opus-5-5` -> routes internally by reasoning level to `claude-opus-5-5-low`, `claude-opus-5-5-medium`, or `claude-opus-5-5-high`
   - `gpt-oss-120b` -> routes to `gpt-oss-120b-medium`
-- Migration note:
-  - old public ids like `claude-sonnet-4-6`, `claude-opus-4-6`, `gemini-3.5-flash-high`, `gemini-3.5-flash-low`, `gemini-3.1-pro-low`, `gemini-3.1-pro-high`, and `gpt-oss-120b-medium` route to current runtime IDs.
 - Default endpoint: `https://cloudcode-pa.googleapis.com` (fallback: `https://daily-cloudcode-pa.sandbox.googleapis.com`)
 
 Catalog map keys are runtime IDs; nested `MODEL_PLACEHOLDER_*` values are not. Discovery uses exact keys first, then matching display names for renamed routes. Catalog presence does not guarantee quota or entitlement: a 429 requires waiting for the reported reset or checking your subscription, not another model alias.

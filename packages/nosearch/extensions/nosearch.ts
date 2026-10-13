@@ -17,6 +17,7 @@ const CHILD_FLAGS = [
   "--no-prompt-templates",
   "--no-themes",
   "--no-session",
+  "--no-mcp",
   "--mode",
   "json",
   "--tools",

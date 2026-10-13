@@ -1,9 +1,11 @@
 {
   "defaultProvider": "antigravity",
-  "defaultModel": "gemini-3.6-flash",
+  "defaultModel": "gemini-3.8-flash",
   "theme": "dracula-vibrant",
   "packages": [
     "npm:@heyhuynhgiabuu/pi-pretty"
   ],
-  "noleaks": true
+  "noleaks": true,
+  "hideThinkingBlock": true,
+  "collapseChangelog": true
 }

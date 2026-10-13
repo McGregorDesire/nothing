@@ -39,7 +39,7 @@ export default function (pi: ExtensionAPI) {
     }
   } catch {}
 
-  const blockedFileNames = [".env", ".npmrc", ".netrc", ".pypirc", ".dockercfg", "auth.json", "credentials", "credentials.json", "known_hosts"];
+  const blockedFileNames = [".env", ".npmrc", ".netrc", ".pypirc", ".dockercfg", "auth.json", "mcp-auth.json", "credentials", "credentials.json", "known_hosts"];
   const blockedFilePrefixes = [".env.", "id_rsa", "id_ed25519", "id_ecdsa", "id_dsa"];
   const blockedExtensions = [".pem", ".key", ".p12", ".pfx", ".keystore", ".jks"];
   const blockedDirNames = [".aws", ".azure", ".config/gcloud", ".docker", ".gnupg", ".kube", ".secrets", ".pi-secrets", ".ssh"];
@@ -57,6 +57,8 @@ export default function (pi: ExtensionAPI) {
     path.join(os.homedir(), ".netrc"),
     path.join(os.homedir(), ".pypirc"),
     path.join(os.homedir(), ".pi", "agent", "auth.json"),
+    path.join(os.homedir(), ".pi", "agent", "mcp.json"),
+    path.join(os.homedir(), ".pi", "agent", "mcp-auth.json"),
   ];
 
   const secretKeyRe = /(^|[^a-z0-9])(authorization|cookie|password|passwd|pwd|secret|token|api[_-]?key|access[_-]?key|private[_-]?key|credential|refresh[_-]?token|id[_-]?token)([^a-z0-9]|$)/i;

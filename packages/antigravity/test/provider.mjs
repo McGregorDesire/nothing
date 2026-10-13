@@ -9,7 +9,6 @@ const catalog = { models: {
   "claude-sonnet-5-5-low": { displayName: "Claude Sonnet 5.5 (Low)", model: "MODEL_PLACEHOLDER_M35" },
   "claude-opus-5-5-high": { displayName: "Claude Opus 5.5 (High)", model: "MODEL_PLACEHOLDER_M27" },
   "claude-sonnet-5-5-high": { displayName: "Claude Sonnet 5.5 (High)", model: "MODEL_PLACEHOLDER_M36" },
-  "gemini-3.7-flash-tiered": { model: "MODEL_PLACEHOLDER_M301" },
   "gemini-3.8-flash-tiered": { model: "MODEL_PLACEHOLDER_M322" },
 } };
 for (const id of Object.keys(catalog.models)) assert.equal(oauth.findDynamicModel(catalog, id)?.id, id);
@@ -18,15 +17,15 @@ assert.equal(oauth.findDynamicModel(catalog, "missing"), undefined);
 assert.equal(oauth.lastMatchedModelDebug, undefined, "no stale Gemini match on later requests");
 assert.match(oauth.lastAvailableModels, /gemini-3\.8-flash-tiered/, "include unlabeled catalog keys");
 assert.equal(getAntigravityRequestModelId("claude-sonnet-5-5", "high"), "claude-sonnet-5-5-high");
+assert.equal(getAntigravityRequestModelId("claude-sonnet-5-5", "max"), "claude-sonnet-5-5-high");
 assert.equal(getAntigravityRequestModelId("claude-sonnet-5-5", "low"), "claude-sonnet-5-5-low");
 assert.equal(getAntigravityRequestModelId("claude-opus-5-5", "high"), "claude-opus-5-5-high");
-assert.equal(getAntigravityRequestModelId("claude-sonnet-4-6", "high"), "claude-sonnet-5-5-high");
-assert.equal(getAntigravityRequestModelId("claude-opus-4-6", "low"), "claude-opus-5-5-low");
-for (const version of ["3.7", "3.8"]) {
-  for (const effort of [undefined, "off", "low", "medium", "high", "xhigh"]) {
+for (const version of ["3.8"]) {
+  for (const effort of [undefined, "off", "low", "medium", "high", "xhigh", "max"]) {
     assert.equal(getAntigravityRequestModelId(`gemini-${version}-flash`, effort), `gemini-${version}-flash-tiered`);
   }
 }
+assert.equal(getAntigravityRequestModelId("gemini-3.8.flash", "medium"), "gemini-3.8-flash-tiered");
 
 const parameters = { type: "object", properties: {
   const: { type: "string", const: "ok" },
@@ -62,7 +61,7 @@ try {
     assert.deepEqual(schema.properties.choices.items.anyOf[0], { type: "STRING", enum: ["yes"] });
     assert.match(oauth.lastMatchedModelDebug, /Claude/);
   }
-  for (const id of ["gemini-3.7-flash", "gemini-3.8-flash", "gemini-3.5-flash"]) {
+  for (const id of ["gemini-3.8-flash", "gemini-3.5-flash"]) {
     await streamAntigravity(ANTIGRAVITY_MODELS.find(m => m.id === id), context, options).result();
     assert.equal(sent.model, id === "gemini-3.5-flash" ? "gemini-3.5-flash-extra-low" : `${id}-tiered`);
     assert.equal(sent.request.tools[0].functionDeclarations[0].parametersJsonSchema.properties.const.const, "ok");

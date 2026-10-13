@@ -82,7 +82,7 @@ commit_message() {
     git -C "$repo" diff --cached
   } > "$prompt"
 
-  if ! command pi --print --no-session --no-tools --no-extensions --no-skills --no-context-files "@$prompt" > "$output" 2>/dev/null; then
+  if ! command pi --print --no-session --no-tools --no-extensions --no-skills --no-context-files --no-mcp "@$prompt" > "$output" 2>/dev/null; then
     rm -f "$prompt" "$output"
     return 1
   fi

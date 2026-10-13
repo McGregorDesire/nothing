@@ -411,6 +411,7 @@ printf 'docker %s\n' "$*" >> "$PI_FAKE_INSTALL_LOG"
     assert(args.includes("--no-prompt-templates"), "--nothing disables prompt templates");
     assert(args.includes("--no-themes"), "--nothing disables themes");
     assert(args.includes("--no-skills") && args.includes("--no-extensions") && args.includes("--no-context-files"), "--nothing disables discovered skills, extensions, and context files");
+    assert(args.includes("--no-mcp"), "--nothing disables mcp");
     assert(!args.includes("--skill"), "--nothing does not add local skills");
     assert(args.includes("--extension") && args.some((arg) => arg.endsWith("/packages/noleaks")), "--nothing keeps the explicit noleaks guard loaded");
 
@@ -419,6 +420,18 @@ printf 'docker %s\n' "$*" >> "$PI_FAKE_INSTALL_LOG"
     assert(result.status === 0, "plain pi remains factory/default under shell integration");
     args = existsSync(argsFile) ? readFileSync(argsFile, "utf8").trim().split(/\n/).filter(Boolean) : [];
     assert(JSON.stringify(args) === JSON.stringify(["--extension", path.join(root, "packages/noleaks"), "hello"]), "plain pi receives only the explicit noleaks guard plus user args");
+
+    writeFileSync(argsFile, "");
+    result = run("bash", ["-c", `source ${JSON.stringify(path.join(root, "dotfiles/shell_integration.sh"))}; pi auth check`], root, { env });
+    assert(result.status === 0, "pi auth passes through without mindset wrapping");
+    args = existsSync(argsFile) ? readFileSync(argsFile, "utf8").trim().split(/\n/).filter(Boolean) : [];
+    assert(JSON.stringify(args) === JSON.stringify(["auth", "check"]), "pi auth receives raw subcommands without noleaks extension");
+
+    writeFileSync(argsFile, "");
+    result = run("bash", ["-c", `source ${JSON.stringify(path.join(root, "dotfiles/shell_integration.sh"))}; pi mcp list`], root, { env });
+    assert(result.status === 0, "pi mcp passes through without mindset wrapping");
+    args = existsSync(argsFile) ? readFileSync(argsFile, "utf8").trim().split(/\n/).filter(Boolean) : [];
+    assert(JSON.stringify(args) === JSON.stringify(["mcp", "list"]), "pi mcp receives raw subcommands without noleaks extension");
 
     const androidCache = path.join(cacheDir, "android-skills");
     run("mkdir", ["-p", path.join(androidCache, "skills", "android-cli"), path.join(androidCache, "skills", "r8-analyzer")], root);

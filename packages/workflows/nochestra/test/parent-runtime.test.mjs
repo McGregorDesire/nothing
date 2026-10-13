@@ -89,7 +89,7 @@ test("buildNochestraDeliveryHandoff selects model tier based on task complexity"
 		active: { id: "github-194", stateFile: ".workflow/tasks/github-194/WORK.md" },
 	});
 	assert.equal(planHandoff.model.provider, "antigravity");
-	assert.equal(planHandoff.model.name, "gemini-3.6-flash");
+	assert.equal(planHandoff.model.name, "gemini-3.8-flash");
 
 	// Explicit override: /triage github:194 use gpt-5.4-mini
 	const overrideParsed = parseNochestraInput("/triage github:194 use gpt-5.4-mini");
@@ -102,14 +102,14 @@ test("buildNochestraDeliveryHandoff selects model tier based on task complexity"
 	assert.equal(overrideHandoff.model.name, "gpt-5.4-mini");
 
 	// Explicit full spec override preserves actual catalog context window
-	const fullSpecParsed = parseNochestraInput("/triage github:194 use antigravity/gemini-3.6-flash");
+	const fullSpecParsed = parseNochestraInput("/triage github:194 use antigravity/gemini-3.8-flash");
 	const fullSpecHandoff = buildNochestraDeliveryHandoff({
 		parsed: fullSpecParsed,
 		checkpoint,
 		active: null,
 	});
 	assert.equal(fullSpecHandoff.model.provider, "antigravity");
-	assert.equal(fullSpecHandoff.model.name, "gemini-3.6-flash");
+	assert.equal(fullSpecHandoff.model.name, "gemini-3.8-flash");
 	assert.equal(fullSpecHandoff.model.contextWindow, 1048576);
 
 	// Provider alias resolution (openai -> openai-codex)
@@ -128,10 +128,10 @@ test("buildNochestraDeliveryHandoff selects model tier based on task complexity"
 	assert.equal(spacedModelHandoff.model.provider, "openai-codex");
 	assert.equal(spacedModelHandoff.model.name, "gpt-5.4-mini");
 
-	// Shortcut and typo resolution (3.6-flash -> gemini-3.6-flash, ornith -> ornith:9b)
-	const shortcutParsed1 = parseNochestraInput("/triage github:194 use 3.6-flash");
+	// Shortcut and typo resolution (3.8-flash -> gemini-3.8-flash, ornith -> ornith:9b)
+	const shortcutParsed1 = parseNochestraInput("/triage github:194 use 3.8-flash");
 	const shortcutHandoff1 = buildNochestraDeliveryHandoff({ parsed: shortcutParsed1, checkpoint, active: null });
-	assert.equal(shortcutHandoff1.model.name, "gemini-3.6-flash");
+	assert.equal(shortcutHandoff1.model.name, "gemini-3.8-flash");
 
 	const shortcutParsed2 = parseNochestraInput("/plan github:194 use ornith");
 	const shortcutHandoff2 = buildNochestraDeliveryHandoff({ parsed: shortcutParsed2, checkpoint, active: null });

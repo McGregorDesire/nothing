@@ -76,7 +76,7 @@ pi --pm          # research, planning, and sync persona
 pi --dev         # implementation and verification focus
 pi --android     # Android development expert; loads local Android CLI skill cache only
 pi --meta        # skill engineering and nothing maintenance
-pi --nothing     # ultimate "clean" mode: zero built-in tools/context
+pi --nothing     # ultimate "clean" mode: zero built-in tools/context/mcp
 ```
 
 Additive modifiers for power users:

@@ -37,7 +37,7 @@ pi() {
   # skills before them, the CLI treats the subcommand as an initial chat prompt
   # instead (for example: `pi update` opens Pi with "update" as input).
   case "${1:-}" in
-    install|remove|uninstall|list|config)
+    install|remove|uninstall|list|config|auth|mcp)
       command pi "$@"
       return $?
       ;;
@@ -469,7 +469,7 @@ EOF
         nothing_update_caches
         return "$pi_update_status"
         ;;
-      install|remove|uninstall|list|config)
+      install|remove|uninstall|list|config|auth|mcp)
         command pi "$@"
         return
         ;;
@@ -651,7 +651,7 @@ EOF
 
   local -a NOTHING_FLAGS=()
   if [[ "$BASE_MINDSET" == "nothing" ]]; then
-    NOTHING_FLAGS+=("--system-prompt" "" "--no-builtin-tools" "--no-skills" "--no-extensions" "--no-prompt-templates" "--no-themes" "--no-context-files")
+    NOTHING_FLAGS+=("--system-prompt" "" "--no-builtin-tools" "--no-skills" "--no-extensions" "--no-prompt-templates" "--no-themes" "--no-context-files" "--no-mcp")
   elif [[ "$BASE_MINDSET" == "nochestra" ]]; then
     NOTHING_FLAGS+=("--no-skills")
   elif [[ "$BASE_MINDSET" == "nochestra-worker" ]]; then
