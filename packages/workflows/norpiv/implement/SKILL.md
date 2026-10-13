@@ -17,6 +17,7 @@ Execute one functional vertical slice and hand it to the human for review.
 - EVIDENCE REJECTION GATE: Before modifying code, `/implement` MUST verify that the target slice is not flagged `[BLOCKED: missing UI/formula evidence]` and evidence status is not `missing`. If blocked, STOP immediately, refuse code changes, surface what evidence is missing (direct Zeplin screen link `https://zpl.io/<id>`, direct Figma frame URL, or formula spec), and ask the human for explicit clarification or override. Never guess product UI or formula truth around a blocked state.
 - NEVER: add `Signed-off-by`; only the human can certify DCO.
 - NEVER: freestyle PR/MR descriptions; use the Draft PR/MR body contract below.
+- NEVER: prefix the title with `Draft:` when passing `--draft` to `gh` or `glab` (e.g. pass `--title "feat(...): ..."` not `--title "Draft: feat(...): ..."`). `glab mr create --draft` automatically prepends `Draft: `, causing duplicate `Draft: Draft: `.
 
 ## Workflow
 1. Identify the first approved unchecked slice in `[PLAN]`. Verify the slice is not marked `[BLOCKED: missing UI/formula evidence]`. If blocked, STOP and ask the human for missing direct evidence or explicit override.
@@ -36,7 +37,7 @@ Execute one functional vertical slice and hand it to the human for review.
 7. Commit using the repository's normal conventions and hooks/CI rules.
    - If the repo or tracker expects a Jira key, preserve it where that repository normally requires it.
    - If AI attribution trailers are required, obtain them from the repository's documented policy rather than hard-coding RPIV-specific formatting.
-8. Push and open a Draft PR/MR with `gh` or `glab` when a remote exists.
+8. Push and open a Draft PR/MR with `gh` or `glab` when a remote exists. Do NOT prefix the title with `Draft:` when passing `--draft`.
 9. Use a temporary body file (`--body-file` or API equivalent) for PR/MR descriptions to avoid shell quoting and markdown escaping bugs.
 10. Append summary, commit hash, and PR/MR link to `[LOG]` (Format: `YYYY-MM-DD hh:mm AM/PM`).
 
@@ -121,6 +122,7 @@ cat > "$body_file" <<'EOF'
 - ...
 EOF
 
+# Do not prefix --title with "Draft:"; glab --draft automatically adds "Draft: "
 glab mr create --draft --title "<title>" --description "$(cat "$body_file")"
 ```
 
