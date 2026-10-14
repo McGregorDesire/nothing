@@ -1,0 +1,3 @@
+# Mark HTML report templates and sample fixtures as vendored so repository statistics accurately reflect TypeScript
+packages/notrace/templates/** linguist-vendored
+*.html linguist-vendored

@@ -1,61 +1,79 @@
-```text
-⠀⠀⠀⠀⣠⣤⣶⣶⣶⣤⣄⡀⠀
-⠀⠀⣴⣾⣿⣿⣿⣿⣿⣧⡀⠈⠢
-⠀⣼⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀
-⢰⡿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀
-⠘⣽⡿⠿⠿⣿⣿⣿⣿⣿⣦⣤⡀
-⠀⣟⠀⠀⠀⣸⣿⡏⠀⠀⠀⢹⠗  nothingness
-⠀⣿⣷⣶⣾⡿⠁⠙⣄⣀⣀⣠⡀
-⠀⠙⠙⢿⡿⣷⣶⣤⣿⣿⡿⠿⠃
-⠀⠀⠀⠺⡏⡏⡏⡏⡏⠉⠁⠀⠀
-⠀⠀⠀⠀⠀⠀⠁⠁⠀⠀⠀⠀⠀
-```
+# nothing
 
-# nothing 🧠
+AI coding agents frequently leak credentials, bloat token context windows, lose structured session history across runs, and lack deterministic bridges from design specs to mobile code. `nothing` solves this by providing a local-first agentic development environment for Pi that enforces zero-leak privacy guards, compresses prompt context on the fly, logs verifiable session traces, and bridges design tokens directly into Jetpack Compose.
 
-> **The ultimate local-first agentic development environment.** `nothing` transforms the [Pi Coding Agent](https://pi.dev) into a professional, reproducible workflow engine with built-in privacy guards, specialized personas, and advanced context optimization.
-
-`nothing` wires together Pi "hats", local workflow skills, privacy extensions, local context compression, and optional behavior modifiers into a single, cohesive setup that works identically on Linux and macOS.
+<!-- Demo / Retrospective Report Preview Placeholder -->
+<!-- Placeholder: Replace with demo GIF or notrace report screenshot -->
+<p align="center">
+  <img src="assets/notrace-preview-placeholder.png" alt="notrace Retrospective Report & Token Savings Demo" width="760" onerror="this.style.display='none'"/>
+  <br/>
+  <em>Placeholder: notrace interactive session report and token savings visualization.</em>
+</p>
 
 ---
 
-## ✨ Features
+## Architecture
 
-- **🛡️ Privacy First**: Always-on credential and secret guard via `@raquezha/noleaks`.
-- **🎩 Persona "Hats"**: Instant switching between Triage, PM, Dev, and Meta engineering modes.
-- **🗜️ Context Optimization**: Integrated local [Headroom](https://github.com/headroom-ai/headroom) compression via `@raquezha/noheadroom`.
-- **🔄 Workflow Platform**: A generic [Workflow Contract](./docs/workflow.md) focusing on 3 Real Modes (Chat, Research, RPIV), using a centralized `.workflow/active.json` to manage state locally without over-engineering.
-- **🧾 Retrospective Memory**: Versioned `notrace.json` session evidence plus HTML reports via `@raquezha/notrace`, with optional extension telemetry.
-- **🐎 Simplicity Pressure**: Optional Ponytail modifier for YAGNI-first, stdlib-first, minimal-diff behavior.
-- **🔄 RPIV Workflow**: A formal Frame → Plan → Implement → Verify → Sync cycle for reliable agentic output.
-- **🚀 One-Command Bootstrap**: reproducible environment setup across home and work machines.
+`nothing` bootstraps system dependencies, links custom personas ("hats"), and orchestrates modular packages to deliver reproducible agent workflows on macOS and Linux:
 
-## 📦 What's Inside
+```mermaid
+flowchart TD
+    subgraph Bootstrap["Bootstrap & Configuration"]
+        B["./bootstrap.sh"] --> S["Shell Integration & Mindsets<br/>(settings.json, mindsets.json, AGENTS.md)"]
+    end
 
-| Category | Component | Purpose |
-|---|---|---|
-| **Privacy** | [`@raquezha/noleaks`](./packages/noleaks) | credential & secret protection |
-| **Optimization** | [`headroom/`](./headroom), [`@raquezha/noheadroom`](./packages/noheadroom) | local context compression |
-| **Workflow** | [`@raquezha/norpiv`](./packages/workflows/norpiv), [`noresearch`](./packages/workflows/noresearch), [`docs/workflow.md`](./docs/workflow.md) | RPIV execution workflow, local Research workflow, and platform workflow contract |
-| **Design** | [`@raquezha/nodesign`](./packages/nodesign) | standalone design context extractor, Personal Access Token (PAT) auth CLI, and preflight tool for AI agents (Figma, Zeplin) |
-| **Search** | [`@raquezha/nosearch`](./packages/nosearch) | Brave & Firecrawl subagent |
-| **UI/UX** | [`@raquezha/notrace`](./packages/notrace), [`nofooter`](./packages/nofooter) | retrospective run records, HTML reports, and powerline footer |
-| **Providers** | [`@raquezha/antigravity`](./packages/antigravity) | Google Antigravity model support |
-| **Behavior** | [Ponytail](https://github.com/DietrichGebert/ponytail) | optional lazy senior-dev ruleset and review commands |
+    subgraph Hats["Persona Hats (pi --hat)"]
+        H1["--rpiv / --dev<br/>Structured execution & verification"]
+        H2["--pm / --research<br/>Analysis, planning & review"]
+        H3["--android<br/>Android & Jetpack Compose engineering"]
+    end
 
-## 🚀 Getting Started
+    subgraph Packages["Packages & Extensions (@raquezha/*)"]
+        P1["@raquezha/noleaks<br/>Credential & Secret Guard"]
+        P2["@raquezha/noheadroom<br/>Context Compression"]
+        P3["@raquezha/notrace<br/>Retrospective Tracing & HTML Reports"]
+        P4["@raquezha/nodesign<br/>Figma/Zeplin to Compose Extractor"]
+    end
+
+    S --> Hats
+    Hats --> Packages
+```
+
+---
+
+## Highlights
+
+### Published `@raquezha/*` Packages
+The core tools are published as standalone npm packages for use in any Pi setup:
+
+- **[`@raquezha/noleaks`](./packages/noleaks)**: Intercepts agent prompt payloads and tool calls to block secret, API key, and credential leaks before requests leave your machine.
+- **[`@raquezha/notrace`](./packages/notrace)**: Generates deterministic session evidence (`notrace.json`), token optimization metrics, and self-contained interactive HTML reports.
+- **[`@raquezha/nodesign`](./packages/nodesign)**: Extracts design tokens, layout specifications, and assets from Figma and Zeplin into clean Jetpack Compose code briefs.
+- **[`@raquezha/noheadroom`](./packages/noheadroom)**: Integrates local context compression to reduce token consumption across long-running multi-turn agent sessions.
+
+### Rigorous Automated Testing
+- Over 380 automated tests run via `npm test` covering CLI behavior, secret redaction, design extraction parsing, and retrospective reporting.
+- CI pipeline validates configurations, shell scripts (`shellcheck`), JSON formats, and multi-platform bootstrap execution across Ubuntu and macOS.
+
+### Automated Changesets Release Pipeline
+- Package versioning, changelog generation, and npm registry publishing are fully automated with [Changesets](https://github.com/changesets/changesets) and GitHub Actions.
+- Every release includes npm provenance attestations for secure, verifiable artifact distribution.
+
+---
+
+## Getting Started
 
 ### 1. Install Full Setup
 
-Fresh machine / personal setup:
+Clone the repository and run the bootstrap script:
 
 ```bash
 git clone https://github.com/raquezha/nothing.git
 cd nothing
-./bootstrap.sh --headroom
+./bootstrap.sh
 ```
 
-> ⚠️ **Warning**: `./bootstrap.sh` archives/resets global Pi discovery directories to ensure a clean, reproducible starting state. Use `--no-reset-pi` if you want to keep existing global resources.
+> **Note**: `./bootstrap.sh` sets up global Pi discovery paths to ensure a clean, reproducible starting state. Pass `--no-reset-pi` if you want to retain existing global resources.
 
 ### 2. Reload Shell
 
@@ -63,97 +81,66 @@ cd nothing
 source ./dotfiles/shell_integration.sh
 ```
 
-## 🎩 Persona Hats & Modifiers
+---
 
-Base hats load repo-local skills and personas:
+## Standalone Usage
 
-```bash
-pi --rpiv        # standard RPIV workflow (Frame -> Implement -> Verify)
-pi --research    # intentional research workflow (or: pi --research "topic")
-pi --nochestra   # optional Nochestra control-plane entrypoint scaffold
-pi --nochestra-worker --handoff /tmp/handoff.json  # bounded worker entrypoint
-pi --pm          # research, planning, and sync persona
-pi --dev         # implementation and verification focus
-pi --android     # Android development expert; loads local Android CLI skill cache only
-pi --meta        # skill engineering and nothing maintenance
-pi --nothing     # ultimate "clean" mode: zero built-in tools/context/mcp
-```
-
-Additive modifiers for power users:
-
-```bash
-pi --headroom    # enable local context compression
-pi --caveman     # terse, token-efficient communication
-pi --rtk         # local terminal output optimization
-pi --cursor      # local pi-cursor-sdk provider extension
-pi --notrace     # write session retrospective artifacts
-pi --ponytail    # load Ponytail's minimal-diff rules and commands
-pi --tkmx        # THE COMBO: --antigravity + --headroom + --caveman + --rtk + --cursor + --notrace + --ponytail
-```
-
-## 🔄 Multi-machine Git sync
-
-After bootstrap, use:
-
-```bash
-rqz-sync --dry-run  # inspect every repo under ~/RQZ
-rqz-sync --safe     # only pull/push clean repos
-rqz-sync            # commit dirty tracked branches, then sync
-```
-
-See [rqz-sync](docs/rqz-sync.md) for its upstream-branch policy and stop conditions.
-
-## 🧩 Standalone Usage
-
-Don't want the full setup? You can still use the skills and packages independently.
+Individual packages and skills can be used independently without running the full monorepo bootstrap.
 
 ### Install published skills
 ```bash
 npx -y skills add raquezha/nothing --full-depth -g -a pi -s '*' -y
 ```
 
-### Install Pi packages
+### Install Pi packages directly
 ```bash
+pi install npm:@raquezha/noleaks
+pi install npm:@raquezha/notrace
+pi install npm:@raquezha/nodesign
 pi install npm:@raquezha/noheadroom
-pi install npm:@raquezha/norpiv
-```
-
-### Ponytail behavior modifier
-
-`pi --ponytail` lazy-clones the upstream Ponytail repo into `~/.local/share/nothing/repos/ponytail` on first use, then loads its Pi extension and skills locally.
-
-Useful commands once loaded:
-
-```text
-/ponytail status
-/ponytail full
-/ponytail ultra
-/ponytail-review
-/ponytail-audit
 ```
 
 ---
 
-## 🛠 Maintenance
+## Persona Hats & Modifiers
 
+Once shell integration is active, base hats configure personas and skill sets for specific workflows:
+
+### Base Hats
+| Command | Mode | Description |
+|---|---|---|
+| `pi --rpiv` | RPIV Workflow | Formal Frame → Plan → Implement → Verify → Sync lifecycle |
+| `pi --research` | Research | Exploratory research workflow (or: `pi --research "topic"`) |
+| `pi --pm` | Product / Planning | Problem framing, user stories, and acceptance criteria |
+| `pi --dev` | Development | Code implementation and test verification focus |
+| `pi --android` | Android Engineering | Jetpack Compose and Android CLI workflow cache |
+| `pi --meta` | Monorepo Maintenance | Skill engineering and repository upkeep |
+| `pi --nothing` | Minimal | Zero extra tools or context; pristine agent base |
+
+### Behavior Modifiers
+Flags can be combined to refine agent output and resource usage:
+
+| Flag | Purpose |
+|---|---|
+| `--headroom` | Enables local prompt context compression |
+| `--caveman` | Terse, token-efficient communication mode |
+| `--rtk` | Terminal output optimization |
+| `--cursor` | Local cursor provider extension |
+| `--notrace` | Records session retrospective artifacts and reports |
+| `--ponytail` | Enforces lazy senior-developer, minimal-diff constraints |
+| `--tkmx` | Full efficiency combination of performance and compression modifiers |
+
+---
+
+## Maintenance
+
+- **Run test suite**: `npm test`
+- **Verify bootstrap**: `./bootstrap.sh --dry-run`
 - **Build packages**: `npm run build --workspaces`
-- **Verify repo**: `npm test`
-- **Refresh managed caches**: `pi update`
-
-### Android CLI skills cache
-
-`pi --android` never installs, updates, or checks the network. It only loads the local cache at `$NOTHING_CACHE_DIR/android-skills` (default: `~/.local/share/nothing/android-skills`). If the cache is missing or locally stamped stale, it warns and continues safely.
-
-Run `pi update` when you explicitly want network work. It updates Pi plus nothing-managed caches: Android CLI skills, Caveman, Ponytail, RTK, and the Headroom image. The Android refresh script remains as an internal helper: it runs `android update`, installs skills with `android skills add --all --project=<temp project>`, verifies `skills/android-cli/SKILL.md`, and atomically swaps the cache.
-
-If the Android CLI is missing, the script prints the Linux/macOS install command. It only runs the installer when you pass `--install-cli`.
-
-## 🤝 Attribution
-
-- Powered by [Pi Coding Agent](https://pi.dev).
-- Context compression by [Headroom](https://github.com/headroom-ai/headroom).
-- Terse mode inspired by [Caveman](https://github.com/JuliusBrussee/caveman).
+- **Check changeset status**: `npm run changeset:status`
 
 ---
 
-**[nothing](https://github.com/raquezha/nothing)** — Built for local-first agentic autonomy.
+## License
+
+This repository is licensed under the [MIT License](./LICENSE). Individual subpackages maintain compatible open-source licenses as noted in their respective directories.
