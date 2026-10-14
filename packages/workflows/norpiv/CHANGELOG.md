@@ -1,5 +1,11 @@
 # @raquezha/norpiv
 
+## 0.3.10
+
+### Patch Changes
+
+- cf1a4a9: Prevent duplicate `Draft:` prefix on GitLab MRs by forbidding `Draft:` in `--title` when passing `--draft` in `/implement`.
+
 ## 0.3.9
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @raquezha/nochestra
 
+## 0.2.8
+
+### Patch Changes
+
+- a1c056c: Update Antigravity Claude models to Claude 5.5 (Sonnet 5.5 and Opus 5.5) with effort-based routing and support for Pi's `max` thinking level.
+- 523888d: Update default model and cloud tier to gemini-3.8-flash, add dot-notation alias support, and remove deprecated 3.6/3.7 Flash and 4.6 Claude models.
+
 ## 0.2.7
 
 ### Patch Changes
