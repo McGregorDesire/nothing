@@ -42,6 +42,17 @@ export const ANTIGRAVITY_ROUTING: Record<string, AntigravityRouting> = {
 		},
 		defaultRequestId: "gemini-3.1-pro-low",
 	},
+	"gemini-4-argon": {
+		off: "gemini-4-argon-low",
+		routing: {
+			minimal: "gemini-4-argon-low",
+			low: "gemini-4-argon-low",
+			medium: "gemini-4-argon-medium",
+			high: "gemini-4-argon-high",
+			xhigh: "gemini-4-argon-high",
+		},
+		defaultRequestId: "gemini-4-argon-medium",
+	},
 	// These account-catalog routes manage thinking server-side; no low/medium/high IDs exist.
 	"gemini-3.8-flash": { defaultRequestId: "gemini-3.8-flash-tiered" },
 	"gemini-3.8.flash": { defaultRequestId: "gemini-3.8-flash-tiered" },
@@ -98,6 +109,16 @@ export const ANTIGRAVITY_MODELS: ProviderModelConfig[] = [
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		contextWindow: 1048576,
 		maxTokens: 65535,
+	},
+	{
+		id: "gemini-4-argon",
+		name: "Gemini 4 Argon (Antigravity)",
+		reasoning: true,
+		thinkingLevelMap: { off: null, low: "LOW", medium: "MEDIUM", high: "HIGH", xhigh: "HIGH", max: "HIGH" } as any,
+		input: ["text", "image"],
+		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+		contextWindow: 1048576,
+		maxTokens: 65536,
 	},
 	{
 		id: "gemini-3.8-flash",

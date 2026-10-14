@@ -211,9 +211,19 @@ export function findDynamicModel(value: any, requestedId: string): DynamicModelI
 	lastAvailableModels = Object.keys(models).sort().join(",");
 	// The map key is the request ID. The nested MODEL_PLACEHOLDER_* value is not.
 	const normalize = (label: string) => label.toLowerCase().replace(/[^a-z0-9]/g, "");
-	const id = Object.hasOwn(models, requestedId) ? requestedId : Object.keys(models).find(
+	let id = Object.hasOwn(models, requestedId) ? requestedId : Object.keys(models).find(
 		(key) => typeof models[key]?.displayName === "string" && normalize(models[key].displayName) === normalize(requestedId),
 	);
+	if (!id) {
+		const baseId = requestedId.replace(/-(low|medium|high|extra-low)$/, "");
+		if (Object.hasOwn(models, baseId)) {
+			id = baseId;
+		} else {
+			id = Object.keys(models).find(
+				(key) => typeof models[key]?.displayName === "string" && normalize(models[key].displayName) === normalize(baseId),
+			);
+		}
+	}
 	if (!id) return undefined;
 	lastMatchedModelDebug = summarizeModelCandidate(models[id]);
 	return { id };
