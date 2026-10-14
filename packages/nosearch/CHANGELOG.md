@@ -1,5 +1,11 @@
 # @raquezha/nosearch
 
+## 0.0.13
+
+### Patch Changes
+
+- 523888d: Add `--no-mcp` to nosearch child agent execution flags to isolate search subagents from MCP servers.
+
 ## 0.0.12
 
 ### Patch Changes

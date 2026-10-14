@@ -1,5 +1,11 @@
 # @raquezha/noleaks
 
+## 0.0.6
+
+### Patch Changes
+
+- 523888d: Block access to `~/.pi/agent/mcp.json` and `mcp-auth.json` to prevent exposure of MCP bearer tokens and OAuth credentials.
+
 ## 0.0.5
 
 ### Patch Changes
